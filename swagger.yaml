@@ -3,14 +3,15 @@ info:
   title: KentKart API
   version: 1.0.11
 servers:
-  - url: https://service.kentkart.com/rl1/api/
+  - url: https://service.kentkart.com/rl1/api
 tags:
-  - name: info
+  - name: api
+  - name: web
 paths:
   /info/announce:
     get:
       tags:
-        - info
+        - api
       parameters:
         - name: region
           in: query
@@ -30,7 +31,7 @@ paths:
   /v2.0/city:
     get:
       tags:
-        - info
+        - api
       responses:
         '200':
           description: Successful operation
@@ -40,3 +41,43 @@ paths:
           description: Pet not found
         '405':
           description: Validation exception
+  /web/pathInfo:
+    get:
+      tags:
+        - web
+      parameters:
+        - name: region
+          in: query
+          schema:
+            type: string
+          required: true
+        - name: displayRouteCode
+          in: query
+          schema:
+            type: string
+          required: true
+        - name: direction
+          in: query
+          required: true
+          schema:
+            enum:
+              ["0","1"]
+        
+        - name: resultType
+          in: query
+          schema:
+            enum:
+              ["111111","010000"]
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '405':
+          description: Validation exception
+
+          
+# https://service.kentkart.com/rl1//web/pathInfo?region=004&lang=tr&authType=4&direction=0&displayRouteCode=10&resultType=111111
